@@ -39,19 +39,25 @@ WHERE `period` ='I semestre' AND  `year` = 1;
    20/06/2020 (21)
 
 ```sql
-
+SELECT *
+FROM university.exams
+WHERE `hour` > '14:00' AND `date` = '2020-06-20';
 ```
 
 6. Selezionare tutti i corsi di laurea magistrale (38)
 
 ```sql
+SELECT *
+FROM university.degrees
+WHERE  `level` = 'magistrale';
 
 ```
 
 7. Da quanti dipartimenti è composta l'università? (12)
 
 ```sql
-
+SELECT count(*)
+FROM university.departments;
 ```
 
 8. Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
