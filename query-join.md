@@ -29,6 +29,14 @@ WHERE `departments`.`id`=7;
 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
 
 ```sql
+SELECT
+     `course_teacher`.`teacher_id` AS `id_insegnante`,
+     `courses`.`name` AS `nome_corso`
+
+FROM `course_teacher`
+INNER JOIN `courses`
+ON courses.id = `course_teacher`.`course_id`
+WHERE `course_teacher`.`teacher_id`=44;
 
 ```
 
@@ -37,6 +45,17 @@ WHERE `departments`.`id`=7;
    nome
 
 ```sql
+SELECT
+     `students`.`name` AS `nome_studente`,
+     `students`.`surname` AS `cognome_studente`,
+     `degrees`.`name` AS `nome_corso`,
+     `departments`.`name` AS `nome_dipartimento`
+FROM `students`
+INNER JOIN `degrees`
+ON `students`.`degree_id` = `degrees`.`id`
+INNER JOIN `departments`
+ON `degrees`.`department_id` = `departments`.`id`
+ORDER BY `students`.`surname`, `students`.`name`;
 
 ```
 
