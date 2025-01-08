@@ -103,5 +103,16 @@ WHERE `departments`.`id` = 5;
    filtrare i tentativi con voto minimo 18.
 
 ```sql
+SELECT
+    `students`.`name` AS `nome_studente`,
+    `students`.`surname` AS `cognome_studente`,
+    `exam_student`.`exam_id` AS `id_esame`,
+    MAX(`exam_student`.`vote`) AS `voto_massimo`,
+    COUNT(`exam_student`.`vote`) AS `numero_tentativi`
+FROM `students`
+INNER JOIN `exam_student`
+ON `exam_student`.`student_id` = `students`.`id`
+WHERE `exam_student`.`vote` > 17
+GROUP BY `students`.`name`, `students`.`surname`, `exam_student`.`exam_id`;
 
 ```
