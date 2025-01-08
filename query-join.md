@@ -62,6 +62,18 @@ ORDER BY `students`.`surname`, `students`.`name`;
 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 
 ```sql
+SELECT
+     `degrees`.`name` AS `nome_corso_di_laurea`,
+     `courses`.`name` AS `nome_corso`,
+     `teachers`.`name` AS `nome_insegnante`,
+     `teachers`.`surname` AS `cognome_insegnante`
+FROM `teachers`
+INNER JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+INNER JOIN `courses`
+ON `course_teacher`.`course_id` = `courses`.`id`
+INNER JOIN `degrees`
+ON `degrees`.`id` = `courses`.`degree_id`;
 
 ```
 
@@ -69,6 +81,20 @@ ORDER BY `students`.`surname`, `students`.`name`;
    Matematica (54)
 
 ```sql
+SELECT
+     `teachers`.`name` AS `nome_insegnanti`,
+     `teachers`.`surname` AS `cognome_insegnanti`,
+     `departments`.`name` AS `nome_dipartimento`
+FROM `teachers`
+INNER JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+INNER JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+INNER JOIN `degrees`
+ON `courses`.`degree_id` = `degrees`.`id`
+INNER JOIN `departments`
+ON `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`id` = 5;
 
 ```
 
