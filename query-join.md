@@ -1,14 +1,12 @@
 1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
 
 ```sql
-SELECT
-     `degrees`.`id` AS `id_corso`,
-     `degrees`.`name` AS `nome_corso`,
-     `students`.`name` AS `nome_studente`
-FROM `degrees`
-INNER JOIN `students`
-ON `degrees`.`id`= `students`.`degree_id`
-WHERE `degrees`.`id`=53;
+SELECT `s`.*
+FROM  `students` AS `s`
+INNER JOIN `degrees` AS `d`
+ON `s`.`degree_id`= `d`.`id`
+WHERE `d`.`name`="corso di laurea in economia ";
+
 
 ```
 
@@ -62,19 +60,17 @@ ORDER BY `students`.`surname`, `students`.`name`;
 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 
 ```sql
-SELECT
-     `degrees`.`name` AS `nome_corso_di_laurea`,
-     `courses`.`name` AS `nome_corso`,
-     `teachers`.`name` AS `nome_insegnante`,
-     `teachers`.`surname` AS `cognome_insegnante`
-FROM `teachers`
-INNER JOIN `course_teacher`
-ON `teachers`.`id` = `course_teacher`.`teacher_id`
-INNER JOIN `courses`
-ON `course_teacher`.`course_id` = `courses`.`id`
-INNER JOIN `degrees`
-ON `degrees`.`id` = `courses`.`degree_id`;
-
+SELECT.*
+      `d`.*
+      `c`.*
+      `t`.*
+FROM `degrees` AS `d`
+INNER JOIN `course`AS `c`
+ON `c`.`degree_id` = `d`.`id`
+INNER JOIN `courses_teacher`AS `ct`
+ON `ct`.`course_id` = `c`.`id`
+INNER JOIN `teachers`AS`t`
+ON `ct`.`teachers_id` = `t`.`id`;
 ```
 
 6. Selezionare tutti i docenti che insegnano nel Dipartimento di
@@ -82,20 +78,18 @@ ON `degrees`.`id` = `courses`.`degree_id`;
 
 ```sql
 SELECT
-     `teachers`.`name` AS `nome_insegnanti`,
-     `teachers`.`surname` AS `cognome_insegnanti`,
-     `departments`.`name` AS `nome_dipartimento`
-FROM `teachers`
-INNER JOIN `course_teacher`
-ON `teachers`.`id` = `course_teacher`.`teacher_id`
-INNER JOIN `courses`
-ON `courses`.`id` = `course_teacher`.`course_id`
-INNER JOIN `degrees`
-ON `courses`.`degree_id` = `degrees`.`id`
-INNER JOIN `departments`
-ON `degrees`.`department_id` = `departments`.`id`
-WHERE `departments`.`id` = 5;
-
+      `dep`.*
+      `t`.*
+FROM `degrees` AS `deg`
+INNER JOIN `courses` AS `c`
+ON `c`.`degree_id` = `deg`.`id`
+INNER JOIN `courses_teacher` AS `ct`
+ON `ct`.`course_id` = `c`.`id`
+INNER JOIN `teachers` AS `t`
+ON `ct`.`teachers_id` = `t`.`id`
+INNER JOIN `departments` AS `dep`
+ON `deg`.`department_id` = `dep`.`id`
+WHERE `dep`.`name` = "Dipartimento di Matematica";
 ```
 
 7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
