@@ -98,15 +98,24 @@ WHERE `dep`.`name` = "Dipartimento di Matematica";
 
 ```sql
 SELECT
-    `students`.`name` AS `nome_studente`,
-    `students`.`surname` AS `cognome_studente`,
-    `exam_student`.`exam_id` AS `id_esame`,
-    MAX(`exam_student`.`vote`) AS `voto_massimo`,
-    COUNT(`exam_student`.`vote`) AS `numero_tentativi`
+    `students`.`name`,
+    `students`.`surname`,
+    `students`.`registration_number`,
+    `courses`.`name` ,
+    `courses`.`period`,
+    `courses`.`year`,
+    `courses`.`cfu`,
+    COUNT(`exam_student`.`stucenti_id`) AS `numero_tentativi`,
+    MAX(`exam_student`.`vote`) AS `voto_massimo`
+
 FROM `students`
 INNER JOIN `exam_student`
-ON `exam_student`.`student_id` = `students`.`id`
-WHERE `exam_student`.`vote` > 17
-GROUP BY `students`.`name`, `students`.`surname`, `exam_student`.`exam_id`;
+ON `stucents`.`id` = `exam_students`.`student_id`
+INNER JOIN `exams`
+ON `exams`.`id` = `exam_students`.`exam_id`
+INNER JOIN `courses`
+ON `exams`.`courses_id` = `courses`.`id`
+GROUP BY `exam_student`.`student_id`, `courses`.`id`
+HAVING MAX( `exam_student`.`vote` ) >= 18
 
 ```
